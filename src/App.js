@@ -1,13 +1,15 @@
 import React from 'react';
 import './App.css';
 
-import Site from './pages/Site'
+import Blog from './pages/blog'
+import Navbar from './components/shared/Navbar';
 
 function App() {
   return (
    <>
+    <Navbar />
     <div className='container'>
-      <Site />
+      <Blog />
     </div>
    </>
   );
