@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react'
 const Category = () => {
 
     const [categories, setCategories] = useState([])
+    const [showForm, setShowForm] = useState(false)
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
 
     const getAllCategories = () => {
         fetch("https://jsonplaceholder.typicode.com/posts")
@@ -46,6 +49,23 @@ const Category = () => {
         )
     }
 
+    const toggleForm = () => {
+        setShowForm(!showForm)
+    }
+
+    const addForm = () => {
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({title, description})
+        })
+        .then(res => res.json())
+        .then(data => setCategories([data, ...categories]))
+        .catch(err => console.error(err))
+    }
+
     useEffect(() => {
         getAllCategories()
     }, [])
@@ -61,26 +81,28 @@ const Category = () => {
                 <h1>List of categories</h1>
             </div>
             <div className="col-6 text-end">
-                <button className="btn btn-primary">New</button>
+                <button onClick={toggleForm} className="btn btn-primary">New</button>
             </div>
         </div>
-
-        <div className="row my-4">
-            <div className="col-4 mx-auto">
-
-                <div className="form-group">
-                    <label htmlFor="title">Title</label>
-                    <input type="text" name="" id="title" className="form-control" />
-                </div>
-                <div className="form-group mt-3">
-                    <label htmlFor="description">Description</label>
-                    <textarea name="" id="description" rows="4" className="form-control"></textarea>
-                </div>
-                <div className="d-grid mt-3">
-                    <button className="btn btn-primary">Add</button>
+       
+        { showForm && (
+            <div className="row my-4">
+                <div className="col-4 mx-auto">
+                    <div className="form-group">
+                        <label htmlFor="title">Title</label>
+                        <input value={title} onChange={ (e) => setTitle(e.target.value)} type="text" name="" id="title" className="form-control" />
+                    </div>
+                    <div className="form-group mt-3">
+                        <label htmlFor="description">Description</label>
+                        <textarea value={description} onChange={ (e) => setDescription(e.target.value)} name="" id="description" rows="4" className="form-control"></textarea>
+                    </div>
+                   
+                    <div className="d-grid mt-3">
+                        <button onClick={addForm} className="btn btn-primary">Add</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        ) }
 
         <div className="row my-4">
 
