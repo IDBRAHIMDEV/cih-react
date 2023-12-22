@@ -7,7 +7,7 @@ const Category = () => {
     const getAllCategories = () => {
         fetch("https://jsonplaceholder.typicode.com/posts")
         .then(response => response.json())
-        .then(data => setCategories([]))
+        .then(data => setCategories(data))
         .catch(err => console.log(err))
     }
 
@@ -66,7 +66,24 @@ const Category = () => {
         </div>
 
         <div className="row my-4">
-            
+            <div className="col-4 mx-auto">
+
+                <div className="form-group">
+                    <label htmlFor="title">Title</label>
+                    <input type="text" name="" id="title" className="form-control" />
+                </div>
+                <div className="form-group mt-3">
+                    <label htmlFor="description">Description</label>
+                    <textarea name="" id="description" rows="4" className="form-control"></textarea>
+                </div>
+                <div className="d-grid mt-3">
+                    <button className="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <div className="row my-4">
+
             { categories.length > 0 ? showAllCategories() : categoriesNotExist()}
            
         </div>
