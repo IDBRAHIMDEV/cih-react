@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2'
 
 const Blog = () => {
 
@@ -8,6 +9,44 @@ const Blog = () => {
     const addPost = () => {
         setPosts([title, ...posts])
         setTitle('')
+    }
+
+    const editPost = (title) => {
+        setTitle(title)
+    }
+
+    const deletePost = post => {
+
+        // if(window.confirm('Are you sure to delete this post: ' + post)) {
+        //     let newPosts = posts.filter(currentPost => currentPost !== post)
+        //     setPosts(newPosts)
+        // }
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't delete this post: "+post,
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+          }).then((result) => {
+            if (result.isConfirmed) {
+
+                let newPosts = posts.filter(currentPost => currentPost !== post)
+                setPosts(newPosts)
+
+              Swal.fire({
+                title: "Deleted!",
+                text: "this post "+ post +" has been deleted.",
+                icon: "success",
+                timer: 3000,
+                timerProgressBar: true
+              });
+            }
+          });
+
+       
     }
 
   return (
@@ -26,8 +65,8 @@ const Blog = () => {
                     
                     {post}
                     <div className="text-end">
-                        <button className="btn btn-warning btn-sm me-2">Edit</button>
-                        <button onClick={() => window.confirm('Are you sure to delete this item ?')} className="btn btn-danger btn-sm">Delete</button>
+                        <button onClick={() => editPost(post) } className="btn btn-warning btn-sm me-2">Edit</button>
+                        <button onClick={() => deletePost(post) } className="btn btn-danger btn-sm">Delete</button>
                     </div>
                 </li>)) }
             </ul>

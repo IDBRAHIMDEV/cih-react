@@ -1,0 +1,11 @@
+{
+  "posts": [
+    {
+      "title": "Learn React",
+      "description": "react for creating a frontend web application",
+      "id": 1
+    }
+  ],
+  "categories": [],
+  "users": []
+}
