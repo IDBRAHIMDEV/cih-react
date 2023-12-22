@@ -19,6 +19,13 @@ const Category = () => {
         return <p>Not category yet!</p>
     }
 
+    const initForm = () => {
+        setTitle('')
+        setDescription('')
+
+        setShowForm(false)
+    }
+
     const showAllCategories = () => {
         return (
             <table className="table table-striped table-dark">
@@ -62,7 +69,10 @@ const Category = () => {
             body: JSON.stringify({title, description})
         })
         .then(res => res.json())
-        .then(data => setCategories([data, ...categories]))
+        .then(data => {
+            setCategories([data, ...categories])
+            initForm()
+        })
         .catch(err => console.error(err))
     }
 
