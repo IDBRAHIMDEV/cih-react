@@ -24,6 +24,11 @@ const Users = () => {
         .catch(err => console.log(err))
     }
 
+    const deleteUserByLogin = (login) => {
+        let newUsers = users.filter(user => user.login !== login)
+        setUsers(newUsers)
+    }
+
     useEffect(() => {
         getUsers()
     }, [])
@@ -44,7 +49,7 @@ const Users = () => {
     <div className="row my-4">
         {users.map(user => (
             <div className="col-3">
-                <Card image={user.avatar_url} url={user.html_url} name={user.login} />
+                <Card image={user.avatar_url} url={user.html_url} name={user.login} onDelete={ (e) => deleteUserByLogin(e) } />
             </div>
         ))}
         
